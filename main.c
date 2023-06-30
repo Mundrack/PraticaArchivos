@@ -7,10 +7,10 @@ void IngresarEdad(int *edad);
 void NombreDueño(char nombred[50]);
 void TipoAnimal(char tipo[50]);
 void IngresarServicio(float *precio, char s[50]);
-void generarFactura(int *cedula, char tipo[50], float *precio, char s[50],char apodo[50], int *edad, char nombred[50]);
+void generarFactura(int cedula, char tipo[50], float precio, char s[50], char apodo[50], int edad, char nombred[50]);
 int menu(char apodo[50], float *precio, char s[50], int *cedula, char tipo[50], int *edad, char nombred[50]);
 
-int main(int argc, char *argv[]) {
+int main() {
     char apodo[50], tipo[50], nombred[50], s[50];
     int cedula, edad;
     float precio;
@@ -20,8 +20,9 @@ int main(int argc, char *argv[]) {
     printf("¿Qué desea hacer?\n");
     do {
         printf("\n 1.Ingresar mascota\n 2.Ingresar servicio\n 3.Generar factura\n 4.Salir\n");
-        n = menu(apodo, &cedula, tipo, &edad, nombred, &precio, s);
+        n = menu(apodo, &precio, s, &cedula, tipo, &edad, nombred);
     } while (n != 4);
+    
     return 0;
 }
 
@@ -41,7 +42,7 @@ int menu(char apodo[50], float *precio, char s[50], int *cedula, char tipo[50], 
             IngresarServicio(precio, s);
             break;
         case 3:
-            generarFactura(apodo, cedula, tipo, edad, nombred, precio, s);
+            generarFactura(*cedula, tipo, *precio, s, apodo, *edad, nombred);
             break;
         default:
             return op;
@@ -91,26 +92,26 @@ void IngresarServicio(float *precio, char s[50]) {
     switch (opcion3) {
         case 1:
             strcpy(s, "Consulta");
-            *precio = 50.0;
+            *precio = 15;
             break;
         case 2:
             strcpy(s, "Peluquería");
-            *precio = 30.0;
+            *precio = 10;
             break;
         case 3:
             strcpy(s, "Vacunación");
-            *precio = 20.0;
+            *precio = 5;
             break;
     }
 }
 
-void generarFactura(int *cedula, char tipo[50], float *precio, char s[50],char apodo[50], int *edad, char nombred[50]) {
+void generarFactura(int cedula, char tipo[50], float precio, char s[50], char apodo[50], int edad, char nombred[50]) {
     printf("Factura generada:\n");
-    printf("Apodo de la mascota: %s\n", apodo);
-    printf("Cédula del dueño: %d\n", *cedula);
+    printf("Cédula del dueño: %d\n", cedula);
     printf("Tipo de animal: %s\n", tipo);
-    printf("Edad de la mascota: %d\n", *edad);
-    printf("Nombre del dueño: %s\n", nombred);
+    printf("Precio: $%.2f\n", precio);
     printf("Servicio solicitado: %s\n", s);
-    printf("Precio: $%.2f\n", *precio);
+    printf("Apodo de la mascota: %s\n", apodo);
+    printf("Edad de la mascota: %d\n", edad);
+    printf("Nombre del dueño: %s\n", nombred);
 }
