@@ -11,9 +11,9 @@ void generarFactura(int cedula, char tipo[50], float precio, char s[50], char ap
 int menu(char apodo[50], float *precio, char s[50], int *cedula, char tipo[50], int *edad, char nombred[50]);
 
 int main() {
-    char apodo[50], tipo[50], nombred[50], s[50];
+    char apodo[50], tipo[50], nombred[50], s[200];
     int cedula, edad;
-    float precio;
+    float precio = 0.0;
     int n;
 
     printf("Bienvenido a la Veterinaria Alvatros.\n");
@@ -26,7 +26,7 @@ int main() {
     return 0;
 }
 
-int menu(char apodo[50], float *precio, char s[50], int *cedula, char tipo[50], int *edad, char nombred[50]) {
+int menu(char apodo[50], float *precio, char s[200], int *cedula, char tipo[50], int *edad, char nombred[50]) {
     int op;
     scanf("%d", &op);
 
@@ -85,32 +85,33 @@ void NombreDueño(char nombred[50]) {
     scanf("%s", nombred);
 }
 
-void IngresarServicio(float *precio, char s[50]) {
+void IngresarServicio(float *precio, char s[200]) {
     printf("Ingrese el servicio deseado:\n 1.-Consulta\n 2.-Peluquería\n 3.-Vacunación\n");
     int opcion3;
     scanf("%d", &opcion3);
     switch (opcion3) {
         case 1:
-            strcpy(s, "Consulta");
-            *precio = 15;
+            strcat(s, "Consulta ($15), ");
+            *precio += 15;
             break;
         case 2:
-            strcpy(s, "Peluquería");
-            *precio = 10;
+            strcat(s, "Peluquería ($10), ");
+            *precio += 10;
             break;
         case 3:
-            strcpy(s, "Vacunación");
-            *precio = 5;
+            strcat(s, "Vacunación ($5), ");
+            *precio += 5;
             break;
     }
 }
 
-void generarFactura(int cedula, char tipo[50], float precio, char s[50], char apodo[50], int edad, char nombred[50]) {
+void generarFactura(int cedula, char tipo[50], float precio, char s[200], char apodo[50], int edad, char nombred[50]) {
     printf("Factura generada:\n");
     printf("Cédula del dueño: %d\n", cedula);
     printf("Tipo de animal: %s\n", tipo);
     printf("Precio: $%.2f\n", precio);
-    printf("Servicio solicitado: %s\n", s);
+    printf("Servicios solicitados:\n");
+    printf("%s\n", s);
     printf("Apodo de la mascota: %s\n", apodo);
     printf("Edad de la mascota: %d\n", edad);
     printf("Nombre del dueño: %s\n", nombred);
